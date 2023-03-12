@@ -1,19 +1,42 @@
-# ввод первого элемента
-prev = int(input())
-length = 1
-max_length = 1 #
+best = 0
+current = 0
 
-while True:
-    n = int(input()) # ввод n
-    if n == 0: # остановка цикла в случае ввода 0
-        break
-    if n > prev or n < prev: # проверка если n > prev или n < prev то увеличить length на единицу
-        length += 1
+previous = None
+incr = None
+
+# ввод: n
+n = int(input())
+
+# цикл while пока значение переменной n не равно 0
+while n != 0:
+    # Флаг any_fits указывает, может ли текущий элемент быть добавлен в текущую последовательность
+    any_fits = previous is None or incr is None
+    # если n не равен previous и если флаг равен True или n больше previous, то увеличить current на 1 и если previous не равен None и n больше previous, то incr = True
+    # иначе incr = None. Если current больше best, то присваиваем best = current. Далее обнуляем current
+    if n != previous:
+        if any_fits:
+            if previous is not None:
+                if n > previous:
+                    incr = True
+            current += 1
+        elif n > previous:
+            if previous is not None:
+                if n > previous:
+                    incr = True
+            current += 1
     else:
-        if length > max_length: #
-            max_length = length
-        length = 2
-    prev = n
+        incr = None
+        if current > best:
+            best = current
+        current = 1
+    # присвоить previous = n
+    previous = n
+    # ввод: новое число n
+    n = int(input())
 
-# вывод max_length
-print(max_length)
+# если current больше best, то присвоить переменной best значение переменной current
+if current > best:
+    best = current
+
+# вывод best
+print(best)
